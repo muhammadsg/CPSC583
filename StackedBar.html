@@ -1,4 +1,4 @@
-<!-- Stacked bar chart d3 code from https://bl.ocks.org/Andrew-Reid/0aedd5f3fb8b099e3e10690bd38bd458 -->
+<!-- Stacked bar chart d3 template from https://bl.ocks.org/Andrew-Reid/0aedd5f3fb8b099e3e10690bd38bd458 -->
 <!DOCTYPE html>
 <style>
 
@@ -17,13 +17,13 @@
         height = +svg.attr("height") - margin.top - margin.bottom,
         g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var y = d3.scaleBand()			// x = d3.scaleBand()
-        .rangeRound([0, height-20])	// .rangeRound([0, width])
+    var y = d3.scaleBand()		
+        .rangeRound([0, height-20])	
         .paddingInner(0.05)
         .align(0.1);
 
-    var x = d3.scaleLinear()		// y = d3.scaleLinear()
-        .rangeRound([0, width-100]);	// .rangeRound([height, 0]);
+    var x = d3.scaleLinear()		
+        .rangeRound([0, width-100]);	
 
     var z = d3.scaleOrdinal()
         .range(["#98abc5", "#ff8c00"]);
@@ -37,9 +37,8 @@
 
         var keys = data.columns.slice(1);
 
-       // data.sort(function(a, b) { return b.total - a.total; });
-        y.domain(data.map(function(d) { return d.AgeGroup; }));					// x.domain...
-        x.domain([0, d3.max(data, function(d) { return d.total; })]).nice();	// y.domain...
+        y.domain(data.map(function(d) { return d.AgeGroup; }));					
+        x.domain([0, d3.max(data, function(d) { return d.total; })]).nice();	
 
         g.append("g")
             .selectAll("g")
@@ -49,30 +48,30 @@
             .selectAll("rect")
             .data(function(d) { return d; })
             .enter().append("rect")
-            .attr("y", function(d) { return y(d.data.AgeGroup); })	    //.attr("x", function(d) { return x(d.data.State); })
-            .attr("x", function(d) { return x(d[0]); })			    //.attr("y", function(d) { return y(d[1]); })
-            .attr("width", function(d) { return x(d[1]) - x(d[0]); })	//.attr("height", function(d) { return y(d[0]) - y(d[1]); })
-            .attr("height", y.bandwidth());						    //.attr("width", x.bandwidth());
+            .attr("y", function(d) { return y(d.data.AgeGroup); })	   
+            .attr("x", function(d) { return x(d[0]); })			    
+            .attr("width", function(d) { return x(d[1]) - x(d[0]); })	
+            .attr("height", y.bandwidth());						   
 
         g.append("g")
             .attr("class", "axis")
-            .attr("transform", "translate(0,0)") 						//  .attr("transform", "translate(0," + height + ")")
+            .attr("transform", "translate(0,0)") 						
             .call(d3.axisLeft(y));
 
 
         g.append("g")
             .attr("class", "axis")
-            .attr("transform", "translate(0,"+590+")")				// New line
-            .call(d3.axisBottom(x).ticks(null, "s"))					//  .call(d3.axisLeft(y).ticks(null, "s"))
+            .attr("transform", "translate(0,"+590+")")			
+            .call(d3.axisBottom(x).ticks(null, "s"))					
             .append("text")
-            .attr("y", 40)												//     .attr("y", 2)
-            .attr("x", x(x.ticks().pop()) + 0.5) 						//     .attr("y", y(y.ticks().pop()) + 0.5)
-            .attr("dy", "0.32em")										//     .attr("dy", "0.32em")
+            .attr("y", 40)											
+            .attr("x", x(x.ticks().pop()) + 0.5) 						
+            .attr("dy", "0.32em")										
             .attr("fill", "#000")
             .attr("font-weight", "bold")
             .attr("text-anchor", "start")
             .text("% of Fights")
-            .attr("transform", "translate("+ (-width+450) +",-10)");   	// Newline
+            .attr("transform", "translate("+ (-width+450) +",-10)");   
 
         var legend = g.append("g")
             .attr("font-family", "sans-serif")
